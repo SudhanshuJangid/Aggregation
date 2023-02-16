@@ -1,0 +1,52 @@
+
+///for match pipeline ....or stage in aggreated
+
+db.getCollection('persons').aggregate([
+{$match: {$and:[{gender:"female"},{age:{$gt:25}}]}}
+])
+
+how many object feild you want....
+{$match: {tags:{$size:3}}}
+
+
+Group...
+
+{$group:{_id:"$company.location.country"}}
+{$group:{_id:{age:"$age",gender:"$gender"}}}
+example....
+ "_id" : {
+        "age" : 24,
+        "gender" : "male"
+    }
+
+both match and group.....
+{$match:{gender:"female"}},
+{$group:{_id:{age:"$age",gender:"$gender"}}}
+
+
+project.......
+{$project:{name:1,gender:1,favoriteFruit:1,company:"$company.title"}}
+example....	
+{
+    "_id" : ObjectId("638ee8300e5e0d5af448efec"),
+    "name" : "Aurelia Gonzales",
+    "gender" : "female",
+    "favoriteFruit" : "banana",
+    "company" : "YURTURE"
+}
+
+
+
+Query an Array of Embedded Documents
+db.getCollection('restaurants').find({"grades":  {
+            "date" : ISODate("2014-06-10T00:00:00.000Z"),
+            "grade" : "A",
+            "score" : 5
+        }})
+
+
+Update in robo 3t :
+db.getCollection('restaurants').updateOne({_id: ObjectId("5eb3d668b31de5d588f4292a")},[{$set:{"address.building":"Hello"}}])
+
+deleteMany:
+db.getCollection('CrudOperationCollection').deleteMany({"Gender":"sdf"})
